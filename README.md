@@ -5,7 +5,5 @@ In this course we will learn the fundamentals of the Python programming language
 By far, the easiest and most casual way to get started would be to open each lesson as a Colab Notebook and experiment within a web browser. This offloads the work of setting up your development environment to a service so you can dive directly into Python.
 
 ### Lesson 1 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VictorCannestro/getting-your-feet-wet-with-python/blob/main/src/main/lessons/lesson1/Lesson_1_Workbook.ipynb)
-
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/VictorCannestro/getting-your-feet-wet-with-python/blob/main/lessons/lesson1/Lesson_1_Workbook.ipynb)
 

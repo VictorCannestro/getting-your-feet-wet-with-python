@@ -1,7 +1,7 @@
 import random 
-from tictactoe.domain.players.Player import Player 
-from tictactoe.domain.Constants import X
-from tictactoe.common.PositionVerifier import verify_marker_can_be_placed_on
+from tictactoe.domain.players.player import Player 
+from tictactoe.domain.constants import X
+from tictactoe.common.position_verifier import verify_marker_can_be_placed_on
 
 
 

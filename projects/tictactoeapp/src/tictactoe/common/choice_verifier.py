@@ -9,4 +9,4 @@ def decide_from(available_decisions: tuple) -> str:
 
 
 if __name__ == "__main__": 
-    pass
+    print("Working inside ChoiceVerifier")

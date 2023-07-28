@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-from tictactoe.domain.gameboard import GameBoard 
-from tictactoe.domain.Constants import Marker, X, O
+from tictactoe.domain.gameboard.game_board import GameBoard 
+from tictactoe.domain.constants import Marker, X, O
 
 
 class Player(ABC):

@@ -1,14 +1,16 @@
-from tictactoe.domain.Constants import Marker, X, O, AVAILABLE_MARKERS
+from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
 
 
 
-def verify_is_available(marker: Marker) -> None:
+def verify_is_available(marker: Marker) -> bool:
     if marker.symbol not in AVAILABLE_MARKERS:
         raise ValueError(f"marker must be either an '{X.symbol}' or '{O.symbol}' Marker")               
-                 
-def verify_markers_do_not_conflict(x: Marker, o: Marker) -> None:                
+    return True
+         
+def verify_markers_do_not_conflict(x: Marker, o: Marker) -> bool:                
     if x.symbol == o.symbol:
         raise ValueError("Opposing players cannot have the same game markers.")       
+    return True
         
 def pick_from(available_markers: tuple) -> str:
     x, o = available_markers
@@ -21,4 +23,4 @@ def pick_from(available_markers: tuple) -> str:
 
 
 if __name__ == "__main__": 
-    pass
+    print("Working inside MarkerVerifier")

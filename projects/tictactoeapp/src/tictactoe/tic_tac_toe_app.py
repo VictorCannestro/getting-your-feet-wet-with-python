@@ -1,8 +1,9 @@
-from tictactoe.domain.gameboard.GameBoard import GameBoard 
-from tictactoe.domain.players.HumanPlayer import HumanPlayer 
-from tictactoe.domain.players.RobotPlayer import RobotPlayer 
-from tictactoe.domain.Constants import Marker, X, O, AVAILABLE_MARKERS 
-from tictactoe.common.MarkerVerifier import pick_from, verify_markers_do_not_conflict
+from tictactoe.domain.gameboard.game_board import GameBoard
+from tictactoe.domain.players.human_player import HumanPlayer 
+from tictactoe.domain.players.robot_player import RobotPlayer 
+from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS 
+from tictactoe.domain.constants import Decision
+from tictactoe.common.marker_verifier import pick_from, verify_markers_do_not_conflict
 
 
 
@@ -28,23 +29,17 @@ class TicTacToeApp():
             game_over = False
             while not game_over:
                 if self.human_player.current_marker() == X:
-                    self.board.display()
-                    self.board.register(X, self.human_player.place_marker_on(self.board))
-                    game_over, winner = self.board.determine_if_game_has_ended()
+                    game_over, winner = self._human_players_turn(X, self.board)
                     if game_over:
                         break
-                    self.board.register(O, self.robot_player.place_marker_on(self.board))
-                    game_over, winner = self.board.determine_if_game_has_ended()
+                    game_over, winner = self._robot_players_turn(O, self.board)
                     if game_over:
                         break
                 else:
-                    self.board.register(X, self.robot_player.place_marker_on(self.board))
-                    game_over, winner = self.board.determine_if_game_has_ended()
+                    game_over, winner = self._robot_players_turn(X, self.board)
                     if game_over:
                         break
-                    self.board.display()
-                    self.board.register(O, self.human_player.place_marker_on(self.board))
-                    game_over, winner = self.board.determine_if_game_has_ended()
+                    game_over, winner = self._human_players_turn(O, self.board)
                     if game_over:
                         break
             self._declare_game_results(winner)
@@ -62,14 +57,23 @@ class TicTacToeApp():
         verify_markers_do_not_conflict(X, O)
         return X if pick_from(AVAILABLE_MARKERS) == X.symbol else O
     
-    def _declare_game_results(self, winner) -> None:
+    def _human_players_turn(self, marker: Marker, board) -> Decision:
+        board.display()
+        board.register(marker, self.human_player.place_marker_on(board))
+        return board.determine_if_game_has_ended()    
+
+    def _robot_players_turn(self, marker: Marker, board) -> Decision:
+        board.register(marker, self.robot_player.place_marker_on(board))
+        return board.determine_if_game_has_ended()                
+    
+    def _declare_game_results(self, winner: Marker) -> None:
         self.board.display()
         if not winner:
             print("The game ended in a draw." )
         else:
             print(f"The game has ended. {winner.symbol} has won.")
     
-    def _setup_new_game(self, winner) -> None:
+    def _setup_new_game(self, winner: Marker) -> None:
         self.board.reset()
         if self.human_player.current_marker() == winner:
             self.human_player.choose_next_marker()

@@ -1,10 +1,10 @@
-from tictactoe.domain.Constants import ADMISSABLE_POSITIONS
-from tictactoe.domain.Constants import Marker, X, O, EMPTY
-from tictactoe.domain.Constants import Decision, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
-from tictactoe.domain.Constants import ENOUGH_TO_WIN
-from tictactoe.domain.Exceptions import PositionOccupied
-from tictactoe.common.PositionVerifier import verify_is_admissible
-from tictactoe.common.MarkerVerifier import verify_is_available
+from tictactoe.domain.constants import ADMISSABLE_POSITIONS
+from tictactoe.domain.constants import Marker, X, O, EMPTY
+from tictactoe.domain.constants import Decision, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
+from tictactoe.domain.constants import ENOUGH_TO_WIN
+from tictactoe.domain.exceptions import PositionOccupied
+from tictactoe.common.position_verifier import verify_is_admissible
+from tictactoe.common.marker_verifier import verify_is_available
 
 
 

@@ -1,0 +1,42 @@
+# https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html
+
+[project]
+name = "example_package_vcannes"
+version = "0.0.11"
+authors = [
+  { name="Victor Cannestro" },
+]
+description = "A small example package of a Tic Tac Toe application"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/VictorCannestro/getting-your-feet-wet-with-python"
+"Bug Tracker" = "https://github.com/VictorCannestro/getting-your-feet-wet-with-python/issues"
+
+[project.optional-dependencies]
+dev = [
+]
+test = [
+    "pytest-cov ~=3.0.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov --cov-report html --cov-report term-missing --cov-fail-under 80"
+console_output_style = "classic"
+python_classes = "*Test"
+pythonpath = [
+  "src"
+]
+testpaths = [
+  "test"
+]
+
+[tool.coverage.run]
+source = ["src"]

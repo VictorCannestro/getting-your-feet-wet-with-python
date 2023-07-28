@@ -46,7 +46,7 @@ ___|___|___
         print(self.__demo_board)
         
     def admissible_positions(self):
-        return ADMISSABLE_POSITIONS
+        return ADMISSABLE_POSITIONS[::]
         
     def current_state(self) -> dict:
         return self.board_map

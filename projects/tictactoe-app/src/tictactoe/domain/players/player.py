@@ -1,11 +1,14 @@
 from abc import ABC, abstractmethod
 from tictactoe.domain.gameboard.game_board import GameBoard 
 from tictactoe.domain.constants import Marker, X, O
+from tictactoe.common.marker_verifier import verify_is_available
+
 
 
 class Player(ABC):
 
     def __init__(self, marker: Marker) -> None:
+        verify_is_available(marker) 
         self.marker = marker
         
     def current_marker(self) -> Marker:
@@ -15,6 +18,7 @@ class Player(ABC):
         return X if self.marker == O else O
     
     def set_marker(self, marker: Marker) -> None:
+        verify_is_available(marker) 
         self.marker = marker    
        
     @abstractmethod

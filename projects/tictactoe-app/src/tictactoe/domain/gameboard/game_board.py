@@ -7,7 +7,6 @@ from tictactoe.common.position_verifier import verify_is_admissible
 from tictactoe.common.marker_verifier import verify_is_available
 
 
-
 class GameBoard():
     
     __THREE_IN_A_ROW = ((0, 1, 2), (3, 4, 5), (6, 7, 8))
@@ -99,8 +98,7 @@ ___|___|___
     def _blank_board(self) -> dict:
         return {cell: EMPTY.symbol for cell in self.admissible_positions()}        
         
-
-        
+      
 if __name__ == "__main__": 
     test_board = GameBoard()
     test_board.display_demo_board()

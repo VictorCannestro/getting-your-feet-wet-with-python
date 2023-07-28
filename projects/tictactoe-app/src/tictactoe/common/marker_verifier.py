@@ -1,7 +1,6 @@
 from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
 
 
-
 def verify_is_available(marker: Marker) -> bool:
     if marker.symbol not in AVAILABLE_MARKERS:
         raise ValueError(f"marker must be either an '{X.symbol}' or '{O.symbol}' Marker")               
@@ -19,7 +18,6 @@ def pick_from(available_markers: tuple) -> str:
         print(f"player_input enter either '{x}' or '{o}'")
         player_input = input(f"Your choice: '{x}' or '{o}'? ")
     return player_input
-
 
 
 if __name__ == "__main__": 

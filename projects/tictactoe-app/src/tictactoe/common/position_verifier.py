@@ -2,7 +2,6 @@ from tictactoe.domain.exceptions import CannotMakeMove
 from tictactoe.domain.constants import ADMISSABLE_POSITIONS
 
 
-
 ADMISSABLE_STR_POSITIONS = tuple(str(n) for n in ADMISSABLE_POSITIONS)
 
 
@@ -25,7 +24,6 @@ def select_position_from(board) -> int:
 
 def _position_is_available(position: str, board) -> bool:
     return int(position) in board.empty_spaces()
-
 
 
 if __name__ == "__main__": 

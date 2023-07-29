@@ -16,11 +16,11 @@ class TicTacToeApp():
     
     
     def __init__(self, first_player: Player, second_player: Player) -> None:
-        verify_markers_do_not_conflict(X, O)
         self._display_the_rules()
+        self.continue_playing = True
         self.first_player = first_player
         self.second_player = second_player
-        self.continue_playing = True
+        verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())
         self.board = GameBoard()
         self.board.display_demo_board()        
         
@@ -32,20 +32,16 @@ class TicTacToeApp():
                 if self.first_player.is_x_player(): 
                     game_over, winner = self._player_turn_action(X, self.board, self.first_player)
                     if game_over:
-                        self.first_player.tally_a_win()
                         break
                     game_over, winner = self._player_turn_action(O, self.board, self.second_player)    
                     if game_over:
-                        self.second_player.tally_a_win()
                         break
                 else:
                     game_over, winner = self._player_turn_action(X, self.board, self.second_player)                    
-                    if game_over:
-                        self.second_player.tally_a_win()                        
+                    if game_over:                                                
                         break
                     game_over, winner = self._player_turn_action(O, self.board, self.first_player)                    
-                    if game_over:
-                        self.first_player.tally_a_win()
+                    if game_over:                        
                         break
             self._declare_game_results(winner)
             self.continue_playing = self.first_player.prompt_to_continue() and self.second_player.prompt_to_continue()
@@ -69,6 +65,10 @@ class TicTacToeApp():
             print("The game ended in a draw." )
         else:
             print(f"The game has ended. {winner.symbol} has won.")
+            if self.first_player.current_marker() == winner: 
+                self.first_player.tally_a_win()  
+            else:
+                self.second_player.tally_a_win()
     
     def _setup_new_game(self, winner: Marker) -> None:
         self.board.reset()

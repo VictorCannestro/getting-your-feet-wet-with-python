@@ -24,27 +24,23 @@ class DecideFromTest(object):
     
     def test_decide_from_y_matches_valid_decision_object(self, monkeypatch):
         monkeypatch.setattr('builtins.input', lambda _: YES.symbol)
-        user_input = decide_from(AVAILABLE_DECISIONS)
-        assert user_input == YES.symbol
+        assert decide_from(AVAILABLE_DECISIONS) == YES.symbol
 
     def test_decide_from_n_matches_valid_decision_object(self, monkeypatch):
         monkeypatch.setattr('builtins.input', lambda _: NO.symbol)
-        user_input = decide_from(AVAILABLE_DECISIONS)
-        assert user_input == NO.symbol
+        assert decide_from(AVAILABLE_DECISIONS) == NO.symbol
 
     @pytest.mark.parametrize("test_data", test_yes_data, ids=test_yes_ids)
     def test_decide_from_with_initial_bad_input_conitnues_prompting_until_yes(self, monkeypatch, test_data):
         responses = iter(test_data)
         monkeypatch.setattr('builtins.input', lambda msg: next(responses))
-        user_input = decide_from(AVAILABLE_DECISIONS)
-        assert user_input == YES.symbol
+        assert decide_from(AVAILABLE_DECISIONS) == YES.symbol
 
     @pytest.mark.parametrize("test_data", test_no_data, ids=test_no_ids)
     def test_decide_from_with_initial_bad_input_conitnues_prompting_until_no(self, monkeypatch, test_data):
         responses = iter(test_data)
         monkeypatch.setattr('builtins.input', lambda msg: next(responses))
-        user_input = decide_from(AVAILABLE_DECISIONS)
-        assert user_input == NO.symbol        
+        assert decide_from(AVAILABLE_DECISIONS) == NO.symbol        
         
     def test_decide_from_without_match_continues_to_prompt_until_input_exhausted(self, monkeypatch):
         responses = iter(['asd', '12df', ' ', '-123', 'H', '`', '['])

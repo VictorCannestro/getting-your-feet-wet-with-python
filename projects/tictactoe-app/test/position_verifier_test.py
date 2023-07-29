@@ -10,13 +10,13 @@ from src.tictactoe.common.position_verifier import verify_is_admissible, verify_
 class VerifyIsAdmissibleTest(object):
     
     positions = tuple(ADMISSABLE_POSITIONS)
-    non_admissible_positions = (-1, "3", 9, 10, 1.3, "y", "X", " ", "")
+    several_non_admissible_positions = (-1, "3", 9, 10, 1.3, "y", "X", " ", "")
         
     @pytest.mark.parametrize("position", positions)
     def test_with_admissible_input(self, position):
         assert verify_is_admissible(position)
 
-    @pytest.mark.parametrize("position", non_admissible_positions)
+    @pytest.mark.parametrize("position", several_non_admissible_positions)
     def test_with_non_admissible_input(self, position):
         with pytest.raises(ValueError) as exception_info: 
             verify_is_admissible(position)
@@ -25,9 +25,9 @@ class VerifyIsAdmissibleTest(object):
 
 class VerifyMarkerCanBePlacedOnTest(object):
     
-    draw_game_positions = ((X, 0), (X, 1), (O, 2), 
+    draw_game_positions = [(X, 0), (X, 1), (O, 2), 
                             (O, 3), (O, 4), (X, 5), 
-                            (X, 6), (X, 7), (O, 8)) 
+                            (X, 6), (X, 7), (O, 8)] 
     
 
     def test_verify_marker_can_be_placed_on_empty_board(self):
@@ -36,10 +36,10 @@ class VerifyMarkerCanBePlacedOnTest(object):
 
     def test_verify_marker_can_be_placed_on_board_with_open_spaces(self):
         test_board = GameBoard()
-        marker_position_pairs = ((X, 0), (X, 1), (O, 2), 
-                                 (O, 3), (O, 4), (X, 5), 
-                                 (X, 6), (X, 7)) 
-        for marker, position in marker_position_pairs:
+        positions = [(X, 0), (X, 1), (O, 2), 
+                     (O, 3), (O, 4), (X, 5), 
+                     (X, 6), (X, 7)]
+        for marker, position in positions:
             test_board.register(marker, position)
             assert verify_marker_can_be_placed_on(test_board) == True
         

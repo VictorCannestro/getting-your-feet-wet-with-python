@@ -29,20 +29,8 @@ ___|___|___
     def __init__(self) -> None:
         self.board_map = self._blank_board()
 
-    def display(self) -> None:
-        print(f'''
-   |   |   
- {self.board_map[0]} | {self.board_map[1]} | {self.board_map[2]} 
-___|___|___
-   |   |   
- {self.board_map[3]} | {self.board_map[4]} | {self.board_map[5]} 
-___|___|___
-   |   |   
- {self.board_map[6]} | {self.board_map[7]} | {self.board_map[8]} 
-   |   |   ''')
-        
-    def display_demo_board(self) -> None:
-        print(self.__demo_board)
+    def _blank_board(self) -> dict:
+        return {cell: EMPTY.symbol for cell in self.admissible_positions()} 
         
     def admissible_positions(self):
         return ADMISSABLE_POSITIONS[::]
@@ -58,7 +46,7 @@ ___|___|___
         self.board_map[position] = marker.symbol
         
     def is_empty(self) -> bool:
-       return len(self.empty_spaces()) == len(ADMISSABLE_POSITIONS)
+       return len(self.empty_spaces()) == len(self.admissible_positions())
        
     def empty_spaces(self) -> tuple:
         return tuple(self._filter_state_using(
@@ -72,9 +60,9 @@ ___|___|___
             lambda position_marker_pair: position_marker_pair[1] == marker.symbol, 
             self.current_state()
         )
-    
-    def reset(self) -> None:
-        self.board_map = self._blank_board()
+
+    def _filter_state_using(self, filter_function: object, dictionary: dict) -> dict:
+        return dict(filter(filter_function, dictionary.items()))
     
     def corner_positions(self) -> tuple:
         return (0, 2, 6, 8)
@@ -87,11 +75,7 @@ ___|___|___
         if not self.empty_spaces():
             return DRAW
         return GAME_NOT_FINISHED
-    
-    
-    def _filter_state_using(self, filter_function: object, dictionary: dict) -> dict:
-        return dict(filter(filter_function, dictionary.items()))
-    
+      
     def _win_conditions_reached_for(self, marker: Marker) -> bool:
         verify_is_available(marker)   
         currently_held_positions = self.spaces_occupied_by(marker)
@@ -99,11 +83,26 @@ ___|___|___
             matching_positions = (position in win_condition for position in currently_held_positions)   
             if sum(matching_positions) == ENOUGH_TO_WIN.value:
                 return True
-        return False
- 
-    def _blank_board(self) -> dict:
-        return {cell: EMPTY.symbol for cell in self.admissible_positions()}        
+        return False     
+
+    def reset(self) -> None:
+        self.board_map = self._blank_board()
         
+    def display_demo_board(self) -> None:
+        print(self.__demo_board)
+        
+    def display(self) -> None:
+        print(f'''
+   |   |   
+ {self.board_map[0]} | {self.board_map[1]} | {self.board_map[2]} 
+___|___|___
+   |   |   
+ {self.board_map[3]} | {self.board_map[4]} | {self.board_map[5]} 
+___|___|___
+   |   |   
+ {self.board_map[6]} | {self.board_map[7]} | {self.board_map[8]} 
+   |   |   ''')
+       
       
 if __name__ == "__main__": 
     test_board = GameBoard()

@@ -11,9 +11,6 @@ class AdvancedRobotPlayer(RobotPlayer):
     def place_marker_on(self, board: GameBoard) -> int:
         """
         Uses the recursive Minimax Algorithm to generate an optimal next move.
-        This is a n-move lookahead strategy. That is, it simulates and scores
-        all possible next-move combinations until a game ending state has been
-        reached. 
 
         Parameters
         ----------
@@ -34,8 +31,9 @@ class AdvancedRobotPlayer(RobotPlayer):
     @lru_cache()
     def _minimax(self, board: GameBoard, depth: int) -> tuple:
         """
-        Recursive minimax at level of depth for either maximizing or minimizing
-        marker.
+        This is a n-move lookahead strategy. That is, it simulates and scores
+        all possible next-move combinations until a game ending state has been
+        reached.
 
         Parameters
         ----------

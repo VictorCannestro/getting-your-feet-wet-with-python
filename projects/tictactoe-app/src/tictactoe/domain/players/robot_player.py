@@ -8,6 +8,21 @@ from tictactoe.common.position_verifier import verify_marker_can_be_placed_on
 class RobotPlayer(Player):
     
     def place_marker_on(self, board) -> int:
+        """
+        Uses a simple, naive strategy: placing a marker at random among the 
+        available positions. This is a 0-move lookahead strategy. That is, it 
+        doesn't consider its opponent's move after its next move. 
+
+        Parameters
+        ----------
+        board : GameBoard
+            The current state of the game's board representation.
+
+        Returns
+        -------
+        int
+            An admissible position among the empty spaces on the board.
+        """
         verify_marker_can_be_placed_on(board)
         choice = random.choice(board.empty_spaces())
         print(f"Robot with marker {self.current_marker().symbol} selected position: {choice}")
@@ -24,5 +39,6 @@ class RobotPlayer(Player):
     def player_type(self) -> str:
         return ROBOT_TYPE    
         
+    
 if __name__ == "__main__": 
     print("Working inside RobotPlayer")

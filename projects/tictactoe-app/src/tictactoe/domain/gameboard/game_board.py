@@ -56,6 +56,9 @@ ___|___|___
         if self.board_map.get(position) != EMPTY.symbol:
             raise PositionOccupied("Cannot place game_piece in an occupied position.")
         self.board_map[position] = marker.symbol
+        
+    def is_empty(self) -> bool:
+       return len(self.empty_spaces()) == len(ADMISSABLE_POSITIONS)
        
     def empty_spaces(self) -> tuple:
         return tuple(self._filter_state_using(
@@ -72,6 +75,9 @@ ___|___|___
     
     def reset(self) -> None:
         self.board_map = self._blank_board()
+    
+    def corner_positions(self) -> tuple:
+        return (0, 2, 6, 8)
     
     def determine_if_game_has_ended(self) -> Decision:
         if self._win_conditions_reached_for(X):

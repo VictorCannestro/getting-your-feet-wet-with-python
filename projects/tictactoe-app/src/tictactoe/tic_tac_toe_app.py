@@ -1,7 +1,7 @@
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
 from tictactoe.domain.players.human_player import HumanPlayer 
-from tictactoe.domain.players.robot_player import RobotPlayer 
+from tictactoe.domain.players.advanced_robot_player import AdvancedRobotPlayer 
 from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS 
 from tictactoe.domain.constants import Decision
 from tictactoe.common.marker_verifier import pick_from, verify_markers_do_not_conflict
@@ -86,6 +86,6 @@ class TicTacToeApp():
     
 if __name__ == "__main__":
     first_player = HumanPlayer(X if pick_from(AVAILABLE_MARKERS) == X.symbol else O)
-    second_player = RobotPlayer(first_player.opposite_marker())    
+    second_player = AdvancedRobotPlayer(first_player.opposite_marker())    
     app = TicTacToeApp(first_player, second_player)
     app.launch()

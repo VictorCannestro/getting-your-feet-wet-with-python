@@ -2,7 +2,7 @@
 
 [project]
 name = "example_package_vcannes"
-version = "0.0.14"
+version = "0.0.16"
 authors = [
   { name="Victor Cannestro" },
 ]

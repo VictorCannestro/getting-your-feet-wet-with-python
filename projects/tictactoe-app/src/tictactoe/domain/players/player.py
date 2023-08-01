@@ -15,14 +15,14 @@ class Player(ABC):
         return self.marker
     
     def opposite_marker(self) -> Marker:
-        return X if self.marker == O else O
+        return X if self.current_marker() == O else O
     
     def set_marker(self, marker: Marker) -> None:
         verify_is_available(marker) 
         self.marker = marker    
     
     def is_x_player(self) -> bool:
-        return True if self.marker == X else False
+        return True if self.current_marker() == X else False
     
     def tally_a_win(self) -> None:
         self.win_count += 1

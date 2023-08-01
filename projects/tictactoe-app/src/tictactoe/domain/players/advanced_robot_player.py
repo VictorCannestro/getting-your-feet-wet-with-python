@@ -7,7 +7,10 @@ from tictactoe.domain.gameboard.game_board import GameBoard
 
 
 class AdvancedRobotPlayer(RobotPlayer):
+    
+    _INITIAL_DEPTH = 0
             
+    
     def place_marker_on(self, board: GameBoard) -> int:
         """
         Uses the recursive Minimax Algorithm to generate an optimal next move.
@@ -24,12 +27,12 @@ class AdvancedRobotPlayer(RobotPlayer):
         """
         if board.is_empty():
             return random.choice(board.corner_positions())
-        score, next_move = self._minimax(copy.deepcopy(board), 0)
+        score, next_move = self._minimax(copy.deepcopy(board), self._INITIAL_DEPTH)
         return next_move
  
     
     @lru_cache()
-    def _minimax(self, board: GameBoard, depth: int) -> tuple:
+    def _minimax(self, simulated_board: GameBoard, depth: int) -> tuple:
         """
         This is a n-move lookahead strategy. That is, it simulates and scores
         all possible next-move combinations until a game ending state has been
@@ -49,18 +52,18 @@ class AdvancedRobotPlayer(RobotPlayer):
             Heuristic score of the optimal next move,
             Position of the optimal next move.
         """
-        game_over, winner = board.determine_if_game_has_ended()
+        game_over, winner = simulated_board.determine_if_game_has_ended()
         if game_over:
             return self._score(winner, depth), None
 
         depth += 1
         scores, moves = [], []
         alternating_marker = self.current_marker() if depth % 2 == 1 else self.opposite_marker()      
-        for possible_move in board.empty_spaces():  
-            possible_game = copy.deepcopy(board)
-            possible_game.register(alternating_marker, possible_move)
+        for possible_next_move in simulated_board.empty_spaces():  
+            possible_game = copy.deepcopy(simulated_board)
+            possible_game.register(alternating_marker, possible_next_move)
             scores.append(self._minimax(possible_game, depth)[0])
-            moves.append(possible_move)
+            moves.append(possible_next_move)
             
         if alternating_marker.symbol == self.current_marker().symbol:
             max_score, max_score_index = max((score, idx) for idx, score in enumerate(scores))

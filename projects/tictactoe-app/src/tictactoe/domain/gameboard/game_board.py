@@ -13,17 +13,6 @@ class GameBoard():
     __THREE_IN_A_COLUMN = ((0, 3, 6), (1, 4, 7), (2, 5, 8)) 
     __THREE_IN_A_DIAGONAL = ((0, 4, 8), (2, 4, 6))
     __WIN_CONDITIONS = __THREE_IN_A_ROW + __THREE_IN_A_COLUMN + __THREE_IN_A_DIAGONAL
-
-    __demo_board = '''
-   |   |   
- 0 | 1 | 2 
-___|___|___
-   |   |   
- 3 | 4 | 5 
-___|___|___
-   |   |   
- 6 | 7 | 8 
-   |   |   '''
     
         
     def __init__(self) -> None:
@@ -86,13 +75,10 @@ ___|___|___
         return False     
 
     def reset(self) -> None:
-        self.board_map = self._blank_board()
+        self.board_map = self._blank_board()      
         
-    def display_demo_board(self) -> None:
-        print(self.__demo_board)
-        
-    def display(self) -> None:
-        print(f'''
+    def __str__(self) -> str:
+        return f'''
    |   |   
  {self.board_map[0]} | {self.board_map[1]} | {self.board_map[2]} 
 ___|___|___
@@ -101,7 +87,7 @@ ___|___|___
 ___|___|___
    |   |   
  {self.board_map[6]} | {self.board_map[7]} | {self.board_map[8]} 
-   |   |   ''')
+   |   |   '''
        
       
 if __name__ == "__main__": 

@@ -1,36 +1,26 @@
+from tictactoe.domain.constants import Marker, X, O 
+from tictactoe.domain.constants import Decision
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
 from tictactoe.domain.players.human_player import HumanPlayer 
 from tictactoe.domain.players.advanced_robot_player import AdvancedRobotPlayer 
-from tictactoe.domain.constants import Marker, X, O 
-from tictactoe.domain.constants import Decision
 from tictactoe.common.marker_verifier import verify_markers_do_not_conflict
+from tictactoe.adapters.user_interface import UserInterface
+from tictactoe.adapters.text_based_user_interface import TextBasedUserInterface
 
 
-class TicTacToeApp():
+class TicTacToeApp():   
     
-    __LOGO = """
-▄▄▄█████▓ ██▓ ▄████▄  ▄▄▄█████▓ ▄▄▄       ▄████▄  ▄▄▄█████▓ ▒█████  ▓█████ 
-▓  ██▒ ▓▒▓██▒▒██▀ ▀█  ▓  ██▒ ▓▒▒████▄    ▒██▀ ▀█  ▓  ██▒ ▓▒▒██▒  ██▒▓█   ▀ 
-▒ ▓██░ ▒░▒██▒▒▓█    ▄ ▒ ▓██░ ▒░▒██  ▀█▄  ▒▓█    ▄ ▒ ▓██░ ▒░▒██░  ██▒▒███   
-░ ▓██▓ ░ ░██░▒▓▓▄ ▄██▒░ ▓██▓ ░ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒░ ▓██▓ ░ ▒██   ██░▒▓█  ▄ 
-  ▒██▒ ░ ░██░▒ ▓███▀ ░  ▒██▒ ░  ▓█   ▓██▒▒ ▓███▀ ░  ▒██▒ ░ ░ ████▓▒░░▒████▒
-  ▒ ░░   ░▓  ░ ░▒ ▒  ░  ▒ ░░    ▒▒   ▓▒█░░ ░▒ ▒  ░  ▒ ░░   ░ ▒░▒░▒░ ░░ ▒░ ░
-    ░     ▒ ░  ░  ▒       ░      ▒   ▒▒ ░  ░  ▒       ░      ░ ▒ ▒░  ░ ░  ░
-  ░       ▒ ░░          ░        ░   ▒   ░          ░      ░ ░ ░ ▒     ░   
-          ░  ░ ░                     ░  ░░ ░                   ░ ░     ░  ░
-             ░                           ░                                     
-"""
-    
-    
-    def __init__(self, first_player: Player, second_player: Player) -> None:
-        self._display_the_rules()
+    def __init__(self, first_player: Player, second_player: Player, user_interface: UserInterface) -> None:
+        self.board = GameBoard()
         self.continue_playing = True
         self.first_player = first_player
         self.second_player = second_player
+        self.user_interface = user_interface
         verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())
-        self.board = GameBoard()
-        self.board.display_demo_board()        
+        self.user_interface.display_logo()
+        self.user_interface.display_the_rules()
+        self.user_interface.display_demo_board()        
         
     def launch(self) -> None:
         while self.continue_playing:
@@ -38,17 +28,17 @@ class TicTacToeApp():
             game_over = False
             while not game_over:
                 if self.first_player.is_x_player(): 
-                    game_over, winner = self._player_turn_action(X, self.board, self.first_player)
+                    game_over, winner = self._player_turn_action(X, self.first_player)
                     if game_over:
                         break
-                    game_over, winner = self._player_turn_action(O, self.board, self.second_player)    
+                    game_over, winner = self._player_turn_action(O, self.second_player)    
                     if game_over:
                         break
                 else:
-                    game_over, winner = self._player_turn_action(X, self.board, self.second_player)                    
+                    game_over, winner = self._player_turn_action(X, self.second_player)                    
                     if game_over:                                                
                         break
-                    game_over, winner = self._player_turn_action(O, self.board, self.first_player)                    
+                    game_over, winner = self._player_turn_action(O, self.first_player)                    
                     if game_over:                        
                         break
             self._declare_game_results(winner)
@@ -56,19 +46,14 @@ class TicTacToeApp():
             if self.continue_playing:
                 self._setup_new_game(winner)
         print("Thank you for playing.")
-        
-    def _display_the_rules(self) -> None:
-        print(self.__LOGO)
-        print("How to win: get three markers in a row, column, or diagonal.")
-        print("This is a two player game in which X goes first.")
     
-    def _player_turn_action(self, marker: Marker, board, player: Player) -> Decision:
-        board.display()
-        board.register(marker, player.place_marker_on(board))
-        return board.determine_if_game_has_ended()                   
+    def _player_turn_action(self, marker: Marker, player: Player) -> Decision:
+        self.user_interface.display_current(self.board) 
+        self.board.register(marker, player.place_marker_on(self.board))
+        return self.board.determine_if_game_has_ended()                   
     
     def _declare_game_results(self, winner: Marker) -> None:
-        self.board.display()
+        self.user_interface.display_current(self.board) 
         if not winner:
             print("The game ended in a draw." )
         else:
@@ -93,7 +78,8 @@ class TicTacToeApp():
     
     
 if __name__ == "__main__":
+    text_ui = TextBasedUserInterface()
     first_player = HumanPlayer(X)
     second_player = AdvancedRobotPlayer(first_player.opposite_marker())    
-    app = TicTacToeApp(first_player, second_player)
+    app = TicTacToeApp(first_player, second_player, text_ui)
     app.launch()

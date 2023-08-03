@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from tictactoe.domain.gameboard.game_board import GameBoard
 
 
-class UserInterface(ABC):
+class Displayable(ABC):
 
     @abstractmethod
     def display_logo(self) -> None:

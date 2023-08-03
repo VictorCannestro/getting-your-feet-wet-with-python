@@ -2,8 +2,8 @@ import pytest
 from src.tictactoe.domain.constants import ADMISSABLE_POSITIONS
 from src.tictactoe.domain.constants import X, O
 from src.tictactoe.domain.gameboard.game_board import GameBoard
-from tictactoe.domain.exceptions import PositionOccupied
-from tictactoe.domain.constants import X_WON, O_WON, DRAW, GAME_NOT_FINISHED
+from src.tictactoe.domain.exceptions import PositionOccupied
+from src.tictactoe.domain.constants import X_WON, O_WON, DRAW, GAME_NOT_FINISHED
 
 
 class GameBoardTest(object):

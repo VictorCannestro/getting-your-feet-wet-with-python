@@ -2,8 +2,9 @@ import copy
 import random 
 from functools import lru_cache
 from tictactoe.domain.players.robot_player import RobotPlayer 
-from tictactoe.domain.constants import Marker, X, O
+from tictactoe.domain.constants import Marker
 from tictactoe.domain.gameboard.game_board import GameBoard
+from tictactoe.common.position_verifier import verify_marker_can_be_placed_on
 
 
 class AdvancedRobotPlayer(RobotPlayer):
@@ -25,6 +26,7 @@ class AdvancedRobotPlayer(RobotPlayer):
         int
             An optimal position among the empty spaces on the board.
         """
+        verify_marker_can_be_placed_on(board)
         if board.is_empty():
             return random.choice(board.corner_positions())
         score, next_move = self._minimax(copy.deepcopy(board), self._INITIAL_DEPTH)
@@ -103,13 +105,4 @@ class AdvancedRobotPlayer(RobotPlayer):
     
      
 if __name__ == "__main__": 
-    robot = AdvancedRobotPlayer(O)
-    test_board = GameBoard()
-    test_board.register(X, 1)
-    test_board.register(O, 6)
-    test_board.register(X, 5)
-    test_board.register(O, 7)
-    test_board.register(X, 8)
-    score, next_move = robot.place_marker_on(test_board)
-    print("AdvancedRobotPlayer's next move: " + str(next_move))
-    
+    print("Working inside AdvancedRobotPlayer")

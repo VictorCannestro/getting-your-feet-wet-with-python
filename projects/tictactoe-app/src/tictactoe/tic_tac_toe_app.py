@@ -2,16 +2,13 @@ from tictactoe.domain.constants import Marker, X, O
 from tictactoe.domain.constants import Decision
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
-from tictactoe.domain.players.human_player import HumanPlayer 
-from tictactoe.domain.players.advanced_robot_player import AdvancedRobotPlayer 
 from tictactoe.common.marker_verifier import verify_markers_do_not_conflict
-from tictactoe.adapters.user_interface import UserInterface
-from tictactoe.adapters.text_based_user_interface import TextBasedUserInterface
+from tictactoe.adapters.outbound.displayable import Displayable
 
 
 class TicTacToeApp():   
     
-    def __init__(self, first_player: Player, second_player: Player, user_interface: UserInterface) -> None:
+    def __init__(self, first_player: Player, second_player: Player, user_interface: Displayable) -> None:
         self.board = GameBoard()
         self.continue_playing = True
         self.first_player = first_player
@@ -78,8 +75,12 @@ class TicTacToeApp():
     
     
 if __name__ == "__main__":
+    from tictactoe.domain.players.human_player import HumanPlayer 
+    from tictactoe.domain.players.advanced_robot_player import AdvancedRobotPlayer 
+    from tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface
+
     text_ui = TextBasedUserInterface()
-    first_player = HumanPlayer(X)
+    first_player = HumanPlayer(X, text_ui)
     second_player = AdvancedRobotPlayer(first_player.opposite_marker())    
     app = TicTacToeApp(first_player, second_player, text_ui)
     app.launch()

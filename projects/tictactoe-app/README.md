@@ -22,7 +22,7 @@ pip install .
 python .\src\tictactoe\tic_tac_toe_app.py
 ```
 If all went well, then the application should launch with the following screen:
-![text-ui](../../../figures/tictactoe-text-based-ui.png)
+![text-ui](../../figures/tictactoe-text-based-ui.PNG)
 
 To leave the virtual environment simply type
 ```bash

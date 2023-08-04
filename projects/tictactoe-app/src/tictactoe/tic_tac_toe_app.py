@@ -14,7 +14,7 @@ class TicTacToeApp():
         self.first_player = first_player
         self.second_player = second_player
         self.user_interface = user_interface
-        verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())
+        verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())        
         self.user_interface.display_logo()
         self.user_interface.display_the_rules()
         self.user_interface.display_demo_board()        

@@ -92,4 +92,4 @@ ___|___|___
       
 if __name__ == "__main__": 
     test_board = GameBoard()
-    test_board.display_demo_board()
+    print(test_board)

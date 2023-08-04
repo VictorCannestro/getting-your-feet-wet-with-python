@@ -16,7 +16,8 @@ class GameBoardTest(object):
     @pytest.mark.parametrize("position", ADMISSABLE_POSITIONS)
     def test_verify_marker_cannot_be_placed_on_full_board(self, position):
         draw_board = self._draw_board()
-        with pytest.raises(PositionOccupied) as exception_info: 
+        with pytest.raises(PositionOccupied) as exception_info:
+            print("MADE IT HERE")
             draw_board.register(O, position)
         assert exception_info 
 

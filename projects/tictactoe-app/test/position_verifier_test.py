@@ -46,9 +46,9 @@ class VerifyMarkerCanBePlacedOnTest(object):
         draw_board = GameBoard()
         for marker, position in self.draw_game_positions:
             draw_board.register(marker, position)
-        with pytest.raises(CannotMakeMove) as exception_info: 
+        with pytest.raises(Exception) as exception_info: 
             verify_marker_can_be_placed_on(draw_board)
-        assert exception_info                
+        assert exception_info.typename == CannotMakeMove.__name__              
         
 
 if __name__ == "__main__": 

@@ -1,6 +1,21 @@
 from tictactoe.domain.exceptions import CannotMakeMove
 from tictactoe.domain.constants import ADMISSABLE_POSITIONS
+from functools import wraps
 
+
+def assume_position_is_admissible(func):
+    @wraps(func)
+    def wrapper_func(class_reference, marker, position):
+        verify_is_admissible(position)
+        return func(class_reference, marker, position)
+    return wrapper_func
+
+def assume_one_or_more_open_positions(func):
+    @wraps(func)
+    def wrapper_func(class_reference, board):
+        verify_marker_can_be_placed_on(board)
+        return func(class_reference, board)
+    return wrapper_func
 
 def verify_is_admissible(position: int) -> bool:        
     if position not in ADMISSABLE_POSITIONS:

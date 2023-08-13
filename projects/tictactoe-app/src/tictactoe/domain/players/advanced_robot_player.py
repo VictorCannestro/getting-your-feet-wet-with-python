@@ -4,7 +4,7 @@ from functools import lru_cache
 from tictactoe.domain.players.robot_player import RobotPlayer 
 from tictactoe.domain.constants import Marker
 from tictactoe.domain.gameboard.game_board import GameBoard
-from tictactoe.common.position_verifier import verify_marker_can_be_placed_on
+from tictactoe.common.position_verifier import assume_one_or_more_open_positions
 
 
 class AdvancedRobotPlayer(RobotPlayer):
@@ -12,6 +12,7 @@ class AdvancedRobotPlayer(RobotPlayer):
     _INITIAL_DEPTH = 0
             
     
+    @assume_one_or_more_open_positions
     def place_marker_on(self, board: GameBoard) -> int:
         """
         Uses the recursive Minimax Algorithm to generate an optimal next move.
@@ -26,7 +27,6 @@ class AdvancedRobotPlayer(RobotPlayer):
         int
             An optimal position among the empty spaces on the board.
         """
-        verify_marker_can_be_placed_on(board)
         if board.is_empty():
             return random.choice(board.corner_positions())
         score, next_move = self._minimax(copy.deepcopy(board), self._INITIAL_DEPTH)

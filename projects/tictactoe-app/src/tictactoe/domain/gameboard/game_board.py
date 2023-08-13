@@ -3,8 +3,8 @@ from tictactoe.domain.constants import Marker, X, O, EMPTY
 from tictactoe.domain.constants import Decision, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
 from tictactoe.domain.constants import ENOUGH_TO_WIN
 from tictactoe.domain.exceptions import PositionOccupied
-from tictactoe.common.position_verifier import verify_is_admissible
-from tictactoe.common.marker_verifier import verify_is_available
+from tictactoe.common.position_verifier import assume_position_is_admissible
+from tictactoe.common.marker_verifier import assume_marker_is_available
 
 
 class GameBoard():
@@ -27,9 +27,9 @@ class GameBoard():
     def current_state(self) -> dict:
         return self.board_map
     
+    @assume_position_is_admissible
+    @assume_marker_is_available
     def register(self, marker: Marker, position: int) -> None:
-        verify_is_available(marker) 
-        verify_is_admissible(position)                    
         if self.board_map.get(position) != EMPTY.symbol:
             raise PositionOccupied("Cannot place game_piece in an occupied position.")
         self.board_map[position] = marker.symbol
@@ -43,8 +43,8 @@ class GameBoard():
             self.current_state()
         ))
     
+    @assume_marker_is_available
     def spaces_occupied_by(self, marker: Marker) -> dict:
-        verify_is_available(marker)     
         return self._filter_state_using(
             lambda position_marker_pair: position_marker_pair[1] == marker.symbol, 
             self.current_state()
@@ -65,8 +65,8 @@ class GameBoard():
             return DRAW
         return GAME_NOT_FINISHED
       
+    @assume_marker_is_available    
     def _win_conditions_reached_for(self, marker: Marker) -> bool:
-        verify_is_available(marker)   
         currently_held_positions = self.spaces_occupied_by(marker)
         for win_condition in self.__WIN_CONDITIONS:
             matching_positions = (position in win_condition for position in currently_held_positions)   

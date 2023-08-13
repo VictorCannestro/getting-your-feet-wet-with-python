@@ -35,6 +35,7 @@ ___|___|___
         print(self.__LOGO)
    
     def display_demo_board(self) -> None:
+        print("GAMEBOARD KEY:")
         print(self.__DEMO_BOARD)
         
     def display_current(self, board: GameBoard) -> None:

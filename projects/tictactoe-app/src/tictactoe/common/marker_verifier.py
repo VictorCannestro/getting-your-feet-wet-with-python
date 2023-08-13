@@ -1,5 +1,13 @@
 from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
+from functools import wraps
 
+
+def assume_marker_is_available(func):
+    @wraps(func)
+    def wrapper_func(*args, **kwargs):
+        verify_is_available(args[1])
+        return func(*args, **kwargs)
+    return wrapper_func
 
 def verify_is_available(marker: Marker) -> bool:
     if marker.symbol not in AVAILABLE_MARKERS:

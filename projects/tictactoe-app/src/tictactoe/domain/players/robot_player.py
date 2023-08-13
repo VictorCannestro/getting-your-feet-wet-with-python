@@ -2,11 +2,12 @@ import random
 from tictactoe.domain.players.player import Player 
 from tictactoe.domain.constants import ROBOT_TYPE 
 from tictactoe.domain.constants import X, MAX_ROBOT_WINS
-from tictactoe.common.position_verifier import verify_marker_can_be_placed_on
+from tictactoe.common.position_verifier import assume_one_or_more_open_positions
 
 
 class RobotPlayer(Player):
     
+    @assume_one_or_more_open_positions
     def place_marker_on(self, board) -> int:
         """
         Uses a simple, naive strategy: placing a marker at random among the 
@@ -23,7 +24,6 @@ class RobotPlayer(Player):
         int
             An admissible position among the empty spaces on the board.
         """
-        verify_marker_can_be_placed_on(board)
         choice = random.choice(board.empty_spaces())
         print(f"Robot with marker {self.current_marker().symbol} selected position: {choice}")
         return choice

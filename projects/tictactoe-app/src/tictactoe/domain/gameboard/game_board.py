@@ -1,6 +1,6 @@
 from tictactoe.domain.constants import ADMISSABLE_POSITIONS
 from tictactoe.domain.constants import Marker, X, O, EMPTY
-from tictactoe.domain.constants import Decision, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
+from tictactoe.domain.constants import Outcome, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
 from tictactoe.domain.constants import ENOUGH_TO_WIN
 from tictactoe.domain.exceptions import PositionOccupied
 from tictactoe.common.position_verifier import assume_position_is_admissible
@@ -56,7 +56,7 @@ class GameBoard():
     def corner_positions(self) -> tuple:
         return (0, 2, 6, 8)
     
-    def determine_if_game_has_ended(self) -> Decision:
+    def determine_if_game_has_ended(self) -> Outcome:
         if self._win_conditions_reached_for(X):
             return X_WON
         if self._win_conditions_reached_for(O):

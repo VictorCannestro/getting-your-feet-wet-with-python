@@ -1,11 +1,9 @@
 from collections import namedtuple
 
 
-ADMISSABLE_POSITIONS = range(9)
-
-HUMAN_TYPE = "Human Player"
-ROBOT_TYPE = "Robot"
-MAX_ROBOT_WINS = 2
+Dimensions = namedtuple("Dimensions", ["rows", "columns"])
+STANDARD_DIMENSIONS = Dimensions(3, 3)
+ADMISSABLE_POSITIONS = range(STANDARD_DIMENSIONS.rows * STANDARD_DIMENSIONS.columns)
 
 Decision = namedtuple("Decision", ["symbol"])
 YES = Decision("y")
@@ -27,6 +25,10 @@ GAME_NOT_FINISHED = Outcome(False, None)
 VictoryThreshold = namedtuple("VictoryThreshold", ["value"])
 ENOUGH_TO_WIN = VictoryThreshold(3)
   
+HUMAN_TYPE = "Human"
+ROBOT_TYPE = "Robot"
+MAX_ROBOT_WINS = 2
+
     
 if __name__ == "__main__": 
     print("Constants file has been accessed")

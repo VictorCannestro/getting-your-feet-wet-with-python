@@ -9,19 +9,19 @@ from tictactoe.common.position_verifier import assume_one_or_more_open_positions
 
 class HumanPlayer(Player):
     
-    def __init__(self, marker: Marker, player_interaction: UserInteractable):
+    def __init__(self, marker: Marker, user_interaction: UserInteractable) -> None:
         super().__init__(marker)
-        self.player_interaction = player_interaction
+        self.user_interaction = user_interaction
     
     @assume_one_or_more_open_positions
     def place_marker_on(self, board: GameBoard) -> int:
-        return self.player_interaction.select_position_from(board)
+        return self.user_interaction.select_position_from(board)
     
     def choose_next_marker(self) -> None:
-        self.set_marker(X if self.player_interaction.pick_from(AVAILABLE_MARKERS) == X.symbol else O)    
+        self.set_marker(X if self.user_interaction.pick_from(AVAILABLE_MARKERS) == X.symbol else O)    
     
     def prompt_to_continue(self) -> bool:
-        return True if self.player_interaction.decide_from(AVAILABLE_DECISIONS) == YES.symbol else False
+        return True if self.user_interaction.decide_from(AVAILABLE_DECISIONS) == YES.symbol else False
     
     def player_type(self) -> str:
         return HUMAN_TYPE 

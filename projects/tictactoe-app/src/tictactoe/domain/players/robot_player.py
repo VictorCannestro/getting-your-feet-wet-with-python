@@ -25,13 +25,13 @@ class RobotPlayer(Player):
             An admissible position among the empty spaces on the board.
         """
         choice = random.choice(board.empty_spaces())
-        print(f"Robot with marker {self.current_marker().symbol} selected position: {choice}")
+        print(f"Robot with marker {self.current_symbol()} selected position: {choice}")
         return choice
     
     def choose_next_marker(self) -> None:
         if self.current_marker() != X:
             self.set_marker(self.opposite_marker())
-        print(f"\nRobot {self.current_marker()} chose {self.current_marker().symbol}")
+        print(f"\nRobot using {self.current_symbol()} chose {self.current_symbol()}")
 
     def prompt_to_continue(self) -> bool:
         return self.win_count < MAX_ROBOT_WINS

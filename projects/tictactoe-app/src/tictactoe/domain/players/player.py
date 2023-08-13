@@ -10,9 +10,12 @@ class Player(ABC):
     def __init__(self, marker: Marker) -> None:
         self.marker = marker
         self.win_count = 0
-        
+    
     def current_marker(self) -> Marker:
         return self.marker
+    
+    def current_symbol(self) -> str:
+        return self.current_marker().symbol
     
     def opposite_marker(self) -> Marker:
         return X if self.current_marker() == O else O

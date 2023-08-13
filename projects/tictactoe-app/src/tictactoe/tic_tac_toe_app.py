@@ -1,5 +1,5 @@
 from tictactoe.domain.constants import Marker, X, O 
-from tictactoe.domain.constants import Decision
+from tictactoe.domain.constants import Outcome
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
 from tictactoe.common.marker_verifier import verify_markers_do_not_conflict
@@ -44,7 +44,7 @@ class TicTacToeApp():
                 self._setup_new_game(winner)
         print("Thank you for playing.")
     
-    def _player_turn_action(self, marker: Marker, player: Player) -> Decision:
+    def _player_turn_action(self, marker: Marker, player: Player) -> Outcome:
         self.user_interface.display_current(self.board) 
         self.board.register(marker, player.place_marker_on(self.board))
         return self.board.determine_if_game_has_ended()                   
@@ -70,8 +70,8 @@ class TicTacToeApp():
             self.first_player.set_marker(self.second_player.opposite_marker())
         else:
             print("After a draw both players will keep their current markers.")
-        print(f"{self.first_player.player_type()} is {self.first_player.current_marker().symbol}")
-        print(f"{self.second_player.player_type()} is {self.second_player.current_marker().symbol}")
+        print(f"Player 1 ({self.first_player.player_type()}) is {self.first_player.current_symbol()}")
+        print(f"Player 2 ({self.second_player.player_type()}) is {self.second_player.current_symbol()}")
     
     
 if __name__ == "__main__":

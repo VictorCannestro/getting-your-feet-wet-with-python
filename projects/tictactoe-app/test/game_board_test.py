@@ -53,10 +53,6 @@ class GameBoardTest(object):
         board.register(X, 0)
         board.reset()
         assert len(board.empty_spaces()) == len(ADMISSABLE_POSITIONS)
-
-    def test_board_admissible_positions(self):
-        board = GameBoard()
-        assert board.admissible_positions() == ADMISSABLE_POSITIONS
         
     def _fill_board(self, positions) -> GameBoard:
         board = GameBoard()

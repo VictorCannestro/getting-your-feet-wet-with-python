@@ -1,9 +1,11 @@
 import pytest
-from src.tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
-from src.tictactoe.common.marker_verifier import verify_is_available, verify_markers_do_not_conflict
+
+from tictactoe.common.marker_verifier import verify_is_available, verify_markers_do_not_conflict
+from tictactoe.domain.constants import Marker, X, O
 
 
 class VerifyIsAvailableTest(object):
+
     def test_X_is_available(self):
         assert verify_is_available(X) == True
         

@@ -1,13 +1,13 @@
 import copy
 import random 
 from functools import lru_cache
-from tictactoe.domain.players.robot_player import RobotPlayer 
+from tictactoe.domain.players.robot import Robot
 from tictactoe.domain.constants import Marker
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.common.position_verifier import assume_one_or_more_open_positions
 
 
-class AdvancedRobotPlayer(RobotPlayer):
+class MinimaxRobot(Robot):
     
     _INITIAL_DEPTH = 0
             
@@ -105,4 +105,4 @@ class AdvancedRobotPlayer(RobotPlayer):
     
      
 if __name__ == "__main__": 
-    print("Working inside AdvancedRobotPlayer")
+    print("Working inside minimax robot")

@@ -1,5 +1,5 @@
 import pytest
-from src.tictactoe.domain.players.robot_player import RobotPlayer 
+from tictactoe.domain.players.robot import Robot
 
 
 class RobotPlayerTest(object):

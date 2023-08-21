@@ -2,8 +2,13 @@ from collections import namedtuple
 
 
 Dimensions = namedtuple("Dimensions", ["rows", "columns"])
-STANDARD_DIMENSIONS = Dimensions(3, 3)
-ADMISSABLE_POSITIONS = range(STANDARD_DIMENSIONS.rows * STANDARD_DIMENSIONS.columns)
+DIM = Dimensions(3, 3)
+ADMISSIBLE_POSITIONS = range(DIM.rows * DIM.columns)
+
+BoardType = namedtuple("BoardType", ["is_current_board_type"])
+WIDE = BoardType(DIM.rows < DIM.columns)
+SQUARE = BoardType(DIM.rows == DIM.columns)
+TALL = BoardType(DIM.rows > DIM.columns)
 
 Decision = namedtuple("Decision", ["symbol"])
 YES = Decision("y")
@@ -21,14 +26,7 @@ X_WON = Outcome(True, X)
 O_WON = Outcome(True, O)
 DRAW = Outcome(True, None)
 GAME_NOT_FINISHED = Outcome(False, None) 
-
-VictoryThreshold = namedtuple("VictoryThreshold", ["value"])
-ENOUGH_TO_WIN = VictoryThreshold(3)
   
 HUMAN_TYPE = "Human"
 ROBOT_TYPE = "Robot"
 MAX_ROBOT_WINS = 2
-
-    
-if __name__ == "__main__": 
-    print("Constants file has been accessed")

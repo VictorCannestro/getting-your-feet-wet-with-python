@@ -1,5 +1,5 @@
 from tictactoe.domain.exceptions import CannotMakeMove
-from tictactoe.domain.constants import ADMISSABLE_POSITIONS
+from tictactoe.domain.constants import ADMISSIBLE_POSITIONS
 from functools import wraps
 
 
@@ -18,8 +18,8 @@ def assume_one_or_more_open_positions(func):
     return wrapper_func
 
 def verify_is_admissible(position: int) -> bool:        
-    if position not in ADMISSABLE_POSITIONS:
-        raise ValueError("position must be an integer from 0 to 9.")     
+    if position not in ADMISSIBLE_POSITIONS:
+        raise ValueError(f"Position must be an integer from 0 to 9. Received: {position}")
     return True         
 
 def verify_marker_can_be_placed_on(board) -> bool: 
@@ -28,8 +28,4 @@ def verify_marker_can_be_placed_on(board) -> bool:
     return True                     
 
 def admissible_str_positions() -> tuple:
-    return tuple(str(n) for n in ADMISSABLE_POSITIONS)
-
-
-if __name__ == "__main__": 
-    print("Working inside PositionVerifier")
+    return tuple(str(n) for n in ADMISSIBLE_POSITIONS)

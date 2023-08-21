@@ -25,7 +25,7 @@ class Player(ABC):
         self.marker = marker    
     
     def is_x_player(self) -> bool:
-        return True if self.current_marker() == X else False
+        return self.current_marker() == X
     
     def tally_a_win(self) -> None:
         self.win_count += 1

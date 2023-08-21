@@ -3,10 +3,10 @@ from tictactoe.domain.constants import Outcome
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
 from tictactoe.common.marker_verifier import verify_markers_do_not_conflict
-from tictactoe.adapters.outbound.displayable import Displayable
+from tictactoe.ports.outbound.displayable import Displayable
 
 
-class TicTacToeApp():   
+class TicTacToeApp:
     
     def __init__(self, first_player: Player, second_player: Player, user_interface: Displayable) -> None:
         self.board = GameBoard()
@@ -32,18 +32,17 @@ class TicTacToeApp():
                     if game_over:
                         break
                 else:
-                    game_over, winner = self._player_turn_action(X, self.second_player)                    
-                    if game_over:                                                
+                    game_over, winner = self._player_turn_action(X, self.second_player)
+                    if game_over:
                         break
                     game_over, winner = self._player_turn_action(O, self.first_player)                    
-                    if game_over:                        
+                    if game_over:
                         break
             self._declare_game_results(winner)
             self.continue_playing = self.first_player.prompt_to_continue() and self.second_player.prompt_to_continue()
             if self.continue_playing:
-                self._setup_new_game(winner)
-        print("Thank you for playing.")
-    
+                self._setup_new_game_based_on(winner)
+
     def _player_turn_action(self, marker: Marker, player: Player) -> Outcome:
         self.user_interface.display_current(self.board) 
         self.board.register(marker, player.place_marker_on(self.board))
@@ -60,7 +59,7 @@ class TicTacToeApp():
             else:
                 self.second_player.tally_a_win()
     
-    def _setup_new_game(self, winner: Marker) -> None:
+    def _setup_new_game_based_on(self, winner: Marker) -> None:
         self.board.reset()
         if self.first_player.current_marker() == winner:
             self.first_player.choose_next_marker()
@@ -75,12 +74,12 @@ class TicTacToeApp():
     
     
 if __name__ == "__main__":
-    from tictactoe.domain.players.human_player import HumanPlayer 
-    from tictactoe.domain.players.advanced_robot_player import AdvancedRobotPlayer 
+    from tictactoe.domain.players.human import Human
+    from tictactoe.domain.players.minimax_robot import MinimaxRobot
     from tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface
 
     text_ui = TextBasedUserInterface()
-    first_player = HumanPlayer(X, text_ui)
-    second_player = AdvancedRobotPlayer(first_player.opposite_marker())    
+    first_player = Human(X, text_ui)
+    second_player = MinimaxRobot(first_player.opposite_marker())
     app = TicTacToeApp(first_player, second_player, text_ui)
     app.launch()

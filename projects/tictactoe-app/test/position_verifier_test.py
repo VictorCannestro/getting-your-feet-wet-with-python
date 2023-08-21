@@ -1,14 +1,14 @@
 import pytest
-from src.tictactoe.domain.constants import ADMISSABLE_POSITIONS
-from src.tictactoe.domain.constants import X, O
-from src.tictactoe.domain.exceptions import CannotMakeMove
-from src.tictactoe.domain.gameboard.game_board import GameBoard
-from src.tictactoe.common.position_verifier import verify_is_admissible, verify_marker_can_be_placed_on
+from tictactoe.domain.constants import ADMISSIBLE_POSITIONS
+from tictactoe.domain.constants import X, O
+from tictactoe.domain.exceptions import CannotMakeMove
+from tictactoe.domain.gameboard.game_board import GameBoard
+from tictactoe.common.position_verifier import verify_is_admissible, verify_marker_can_be_placed_on
 
 
 class VerifyIsAdmissibleTest(object):
     
-    positions = tuple(ADMISSABLE_POSITIONS)
+    positions = tuple(ADMISSIBLE_POSITIONS)
     several_non_admissible_positions = (-1, "3", 9, 10, 1.3, "y", "X", " ", "")
         
     @pytest.mark.parametrize("position", positions)

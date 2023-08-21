@@ -1,8 +1,8 @@
 import pytest
-from src.tictactoe.domain.gameboard.game_board import GameBoard
-from src.tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface 
-from src.tictactoe.domain.constants import Decision, YES, NO, AVAILABLE_DECISIONS
-from src.tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
+from tictactoe.domain.gameboard.game_board import GameBoard
+from tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface
+from tictactoe.domain.constants import Decision, YES, NO, AVAILABLE_DECISIONS
+from tictactoe.domain.constants import Marker, X, O, AVAILABLE_MARKERS
 
 
 
@@ -128,7 +128,7 @@ class SelectPositionFromTest(object):
     def test_select_admissible_position_from_empty_board(self, monkeypatch):
         empty_board = GameBoard()
         monkeypatch.setattr('builtins.input', lambda _: "0")
-        user_input = self.text_ui.select_position_from(empty_board)
+        user_input = self.text_ui.select_position_on(empty_board)
         assert user_input == 0
 
     def test_select_occupied_position_from_board(self, monkeypatch):
@@ -136,7 +136,7 @@ class SelectPositionFromTest(object):
         board.register(X, 0)
         responses = iter(['0', '1'])
         monkeypatch.setattr('builtins.input', lambda msg: next(responses))
-        assert self.text_ui.select_position_from(board) == 1
+        assert self.text_ui.select_position_on(board) == 1
 
     @pytest.mark.parametrize("test_data", test_invalid_then_admissible_data, ids=test_ids)
     def test_invalid_position_from_empty_board_conitnues_prompting_until_valid(self, monkeypatch, test_data):
@@ -144,14 +144,14 @@ class SelectPositionFromTest(object):
         invalid_input, valid_input = test_data
         responses = iter(test_data)
         monkeypatch.setattr('builtins.input', lambda msg: next(responses))
-        assert self.text_ui.select_position_from(empty_board) == int(valid_input)     
+        assert self.text_ui.select_position_on(empty_board) == int(valid_input)
         
     def test_select_position_from_without_match_continues_to_prompt_until_input_exhausted(self, monkeypatch):
         empty_board = GameBoard()
         responses = iter(['asd', '12df', ' ', '-123', 'H', '`', '['])
         monkeypatch.setattr('builtins.input', lambda msg: next(responses))
         with pytest.raises(StopIteration) as exception_info: 
-            self.text_ui.select_position_from(empty_board)
+            self.text_ui.select_position_on(empty_board)
         assert exception_info 
         
 

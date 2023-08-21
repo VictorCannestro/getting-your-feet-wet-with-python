@@ -19,6 +19,3 @@ def verify_markers_do_not_conflict(x: Marker, o: Marker) -> bool:
         raise ValueError("Opposing players cannot have the same game markers.")       
     return True
         
-
-if __name__ == "__main__": 
-    print("Working inside MarkerVerifier")

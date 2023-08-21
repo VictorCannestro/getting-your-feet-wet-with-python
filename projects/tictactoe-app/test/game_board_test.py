@@ -1,9 +1,9 @@
 import pytest
-from src.tictactoe.domain.constants import ADMISSABLE_POSITIONS
-from src.tictactoe.domain.constants import X, O
-from src.tictactoe.domain.gameboard.game_board import GameBoard
-from src.tictactoe.domain.exceptions import PositionOccupied
-from src.tictactoe.domain.constants import X_WON, O_WON, DRAW, GAME_NOT_FINISHED
+from tictactoe.domain.constants import ADMISSIBLE_POSITIONS
+from tictactoe.domain.constants import X, O
+from tictactoe.domain.gameboard.game_board import GameBoard
+from tictactoe.domain.exceptions import PositionOccupied
+from tictactoe.domain.constants import X_WON, O_WON, DRAW, GAME_NOT_FINISHED
 
 
 class GameBoardTest(object):
@@ -25,7 +25,7 @@ class GameBoardTest(object):
                                  (X, 3), (O, 4), (X, 5), 
                                  (O, 6)) 
             
-    @pytest.mark.parametrize("position", ADMISSABLE_POSITIONS)
+    @pytest.mark.parametrize("position", ADMISSIBLE_POSITIONS)
     def test_verify_marker_cannot_be_placed_on_full_board(self, position):
         draw_board = self._fill_board(self.draw_game_positions)            
         with pytest.raises(Exception) as exception_info: 
@@ -52,11 +52,7 @@ class GameBoardTest(object):
         board = GameBoard()
         board.register(X, 0)
         board.reset()
-        assert len(board.empty_spaces()) == len(ADMISSABLE_POSITIONS)
-
-    def test_board_admissible_positions(self):
-        board = GameBoard()
-        assert board.admissible_positions() == ADMISSABLE_POSITIONS
+        assert len(board.empty_spaces()) == len(ADMISSIBLE_POSITIONS)
         
     def _fill_board(self, positions) -> GameBoard:
         board = GameBoard()

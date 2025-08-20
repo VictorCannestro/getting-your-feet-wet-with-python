@@ -1,12 +1,10 @@
-from importlib.util import source_hash
-
+from tictactoe.common.marker_verifier import assume_marker_is_available
+from tictactoe.common.position_verifier import assume_position_is_admissible
 from tictactoe.domain.constants import Dimensions
 from tictactoe.domain.constants import Marker, X, O, EMPTY
 from tictactoe.domain.constants import Outcome, X_WON, O_WON, DRAW, GAME_NOT_FINISHED
 from tictactoe.domain.exceptions import PositionOccupied
 from tictactoe.domain.gameboard.win_condition_calculator import WinConditionCalculator
-from tictactoe.common.position_verifier import assume_position_is_admissible
-from tictactoe.common.marker_verifier import assume_marker_is_available
 
 
 class GameBoard:

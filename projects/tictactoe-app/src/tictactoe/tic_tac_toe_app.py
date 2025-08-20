@@ -1,20 +1,28 @@
-from tictactoe.domain.constants import Marker, X, O 
+from tictactoe.domain.constants import Marker, X, O, Dimensions
 from tictactoe.domain.constants import Outcome
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.domain.players.player import Player
 from tictactoe.common.marker_verifier import verify_markers_do_not_conflict
+from tictactoe.domain.players.robot import Robot
 from tictactoe.ports.outbound.displayable import Displayable
+from tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface
 
 
 class TicTacToeApp:
     
-    def __init__(self, first_player: Player, second_player: Player, user_interface: Displayable) -> None:
-        self.board = GameBoard()
-        self.continue_playing = True
+    def __init__(
+            self,
+            user_interface: Displayable,
+            first_player: Player = Robot(X),
+            second_player: Player = Robot(O),
+            dimensions: Dimensions = Dimensions(3, 3)
+    ) -> None:
+        self.user_interface = user_interface
         self.first_player = first_player
         self.second_player = second_player
-        self.user_interface = user_interface
-        verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())        
+        verify_markers_do_not_conflict(first_player.current_marker(), second_player.current_marker())
+        self.board = GameBoard(dimensions)
+        self.continue_playing = True
         self.user_interface.display_logo()
         self.user_interface.display_the_rules()
         self.user_interface.display_demo_board()        
@@ -51,9 +59,9 @@ class TicTacToeApp:
     def _declare_game_results(self, winner: Marker) -> None:
         self.user_interface.display_current(self.board) 
         if not winner:
-            print("The game ended in a draw." )
+            self.user_interface.display_draw_message()
         else:
-            print(f"The game has ended. {winner.symbol} has won.")
+            self.user_interface.display_win_message(winner)
             if self.first_player.current_marker() == winner: 
                 self.first_player.tally_a_win()  
             else:
@@ -64,11 +72,9 @@ class TicTacToeApp:
         if self.first_player.current_marker() == winner:
             self.first_player.choose_next_marker()
             self.second_player.set_marker(self.first_player.opposite_marker())
-        elif self.second_player.current_marker() == winner:
+        else:
             self.second_player.choose_next_marker()
             self.first_player.set_marker(self.second_player.opposite_marker())
-        else:
-            print("After a draw both players will keep their current markers.")
         print(f"Player 1 ({self.first_player.player_type()}) is {self.first_player.current_symbol()}")
         print(f"Player 2 ({self.second_player.player_type()}) is {self.second_player.current_symbol()}")
     
@@ -76,10 +82,9 @@ class TicTacToeApp:
 if __name__ == "__main__":
     from tictactoe.domain.players.human import Human
     from tictactoe.domain.players.minimax_robot import MinimaxRobot
-    from tictactoe.infrastructure.views.text_based_user_interface import TextBasedUserInterface
 
     text_ui = TextBasedUserInterface()
-    first_player = Human(X, text_ui)
-    second_player = MinimaxRobot(first_player.opposite_marker())
-    app = TicTacToeApp(first_player, second_player, text_ui)
+    p1 = Human(X, text_ui)
+    p2 = MinimaxRobot(p1.opposite_marker())
+    app = TicTacToeApp(text_ui, p1, p2)
     app.launch()

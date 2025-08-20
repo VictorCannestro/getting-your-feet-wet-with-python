@@ -102,7 +102,7 @@ class PickFromTest(object):
         assert exception_info 
 
 
-class SelectPositionFromTest(object):
+class SelectPositionOnTest(object):
     
     text_ui = TextBasedUserInterface()
     
@@ -139,7 +139,7 @@ class SelectPositionFromTest(object):
         assert self.text_ui.select_position_on(board) == 1
 
     @pytest.mark.parametrize("test_data", test_invalid_then_admissible_data, ids=test_ids)
-    def test_invalid_position_from_empty_board_conitnues_prompting_until_valid(self, monkeypatch, test_data):
+    def test_invalid_position_from_empty_board_continues_prompting_until_valid(self, monkeypatch, test_data):
         empty_board = GameBoard()
         invalid_input, valid_input = test_data
         responses = iter(test_data)

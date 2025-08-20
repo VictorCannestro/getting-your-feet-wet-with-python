@@ -28,7 +28,7 @@ class VerifyMarkersDoNotConflictTest(object):
         assert verify_markers_do_not_conflict(O,X) == True
 
     @pytest.mark.parametrize("pair", [(X,X), (O,O), (Marker("D"), Marker("D"))])
-    def test_conflicting_markers_should_raise_error(self, pair: Marker):
+    def test_conflicting_markers_should_raise_error(self, pair: tuple):
         a, b = pair
         with pytest.raises(ValueError) as exception_info: 
             verify_markers_do_not_conflict(a,b)

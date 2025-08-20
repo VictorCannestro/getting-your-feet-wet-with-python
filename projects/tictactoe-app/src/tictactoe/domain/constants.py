@@ -29,4 +29,4 @@ GAME_NOT_FINISHED = Outcome(False, None)
   
 HUMAN_TYPE = "Human"
 ROBOT_TYPE = "Robot"
-MAX_ROBOT_WINS = 2
+MAX_ROBOT_WINS = 1

@@ -1,3 +1,4 @@
+from tictactoe.domain.constants import Marker
 from tictactoe.domain.gameboard.game_board import GameBoard
 from tictactoe.common.position_verifier import admissible_str_positions
 from tictactoe.ports.inbound.user_interactable import UserInteractable
@@ -71,7 +72,13 @@ ___|___|___
             print("Not an available position. Choose again.")
             player_input = input(f"Position of your next move {list(board.empty_spaces())}: ")
         return int(player_input)
-    
+
+    def display_win_message(self, marker: Marker) -> None:
+       print(f"The game has ended. {marker.symbol} won.")
+
+    def display_draw_message(self) -> None:
+        print("The game ended in a draw." )
+
 
 if __name__ == "__main__": 
     pass

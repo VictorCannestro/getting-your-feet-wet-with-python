@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+
+from tictactoe.domain.constants import Marker
 from tictactoe.domain.gameboard.game_board import GameBoard
 
 
@@ -19,7 +21,15 @@ class Displayable(ABC):
     @abstractmethod  
     def display_the_rules(self) -> None:
        pass
-       
+
+    @abstractmethod
+    def display_win_message(self, marker: Marker) -> None:
+       pass
+
+    @abstractmethod
+    def display_draw_message(self) -> None:
+        pass
+
    
 if __name__ == "__main__": 
     pass

@@ -32,7 +32,7 @@ class Robot(Player):
             print(f"\nRobot using {self.current_symbol()} chose {self.opposite_marker().symbol}")
             self.set_marker(self.opposite_marker())
         else:
-            print(f"\nRobot using {self.current_symbol()} chose {self.current_symbol().symbol}")
+            print(f"\nRobot using {self.current_symbol()} chose {self.current_symbol()}")
 
     def prompt_to_continue(self) -> bool:
         return self.win_count < MAX_ROBOT_WINS

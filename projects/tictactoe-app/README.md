@@ -42,11 +42,11 @@ python .\src\tictactoe\tic_tac_toe_app.py
 ```
 
 ## Requirements
-##### 1:  There will be two players, one human and one computer.
-##### 2:  The only valid symbols allowed on the board are 'X', 'O', and '_'.
+##### 1: There will be two players, one human and one computer.
+##### 2: The only valid symbols allowed on the board are 'X', 'O', and '_'.
 ##### 3: One player will be assigned X and the other, O.
 ##### 4: The human player will choose to play X or O for the first game.
-##### 5: In each game afterwards, the most recent winner will choose to play X or O.
+##### 5: In each game afterwards, the most recent winner will choose to play X or O. In case of a draw, the same markers will be used.
 ##### 6: When a new game starts, all cells on the game board should be blank.
 ##### 7: The player assigned X will make the first move.
 ##### 8: After the first move, the players will alternate turns.
